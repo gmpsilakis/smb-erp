@@ -1,0 +1,12 @@
+{
+  "name": "meridian-ops-prototype",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Clickable concept prototype for a small-manufacturer ops tool (scheduling, quality, inventory).",
+  "scripts": {
+    "start": "live-server --port=5500 --open=/index.html"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}

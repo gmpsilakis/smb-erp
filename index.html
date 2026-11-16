@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Meridian Ops</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="mark">MW</div>
+      <div class="name">Meridian Works</div>
+      <div class="sub">Ops console &middot; concept</div>
+    </div>
+    <nav class="primary" id="navPrimary">
+      <button class="nav-item" data-page="home" aria-current="page">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12L12 3l9 9"/><path d="M9 21V12h6v9"/><path d="M3 12v9h18v-9"/></svg>
+        Home
+      </button>
+      <button class="nav-item" data-page="queue">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 3v3M16 3v3"/></svg>
+        Work Center Queue
+        <span class="count" id="navCountQueue">0</span>
+      </button>
+      <button class="nav-item" data-page="quality">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l8 3.5v5.2c0 4.6-3.2 8-8 9.3-4.8-1.3-8-4.7-8-9.3V6.5L12 3z"/><path d="M9 12l2 2 4-4.5"/></svg>
+        Quality
+        <span class="count" id="navCountQual">0</span>
+      </button>
+      <button class="nav-item" data-page="inventory">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7M12 11v10"/></svg>
+        Inventory
+        <span class="count" id="navCountInv">0</span>
+      </button>
+      <hr class="nav-divider">
+      <button class="nav-item" data-page="settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Settings
+      </button>
+    </nav>
+    <div class="sidebar-foot">Sample data for internal review.<br>Not connected to shop-floor systems.</div>
+  </aside>
+
+  <div class="tabbar" id="tabbar">
+    <button data-page="home" aria-current="page">Home</button>
+    <button data-page="queue">Queue</button>
+    <button data-page="quality">Quality</button>
+    <button data-page="inventory">Inventory</button>
+    <button data-page="settings">Settings</button>
+  </div>
+
+  <main class="main">
+    <div class="topbar">
+      <div>
+        <h1 id="pageTitle">Home</h1>
+        <div class="desc" id="pageDesc">Active issues and shop performance.</div>
+      </div>
+      <div class="topbar-right">
+        <div class="global-search-wrap">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          <input class="global-search" id="globalSearch" type="search" placeholder="Search WO#, part, customer, SKU&hellip;" autocomplete="off">
+          <div class="search-results" id="searchResults"></div>
+        </div>
+        <span class="badge-demo"><span class="dot"></span>Concept &middot; sample data</span>
+      </div>
+    </div>
+
+    <!-- ===== HOME ===== -->
+    <section class="page" data-page="home">
+      <div class="date-range-bar" id="dateRangeBar">
+        <span class="range-label">Period:</span>
+        <button class="range-btn" data-days="7">7 days</button>
+        <button class="range-btn active" data-days="30">30 days</button>
+        <button class="range-btn" data-days="90">90 days</button>
+      </div>
+      <div class="home-kpi-grid" id="homeKPIs"></div>
+
+      <div class="section-head">
+        <div class="section-head-left">
+          <h2>Needs attention</h2>
+          <span class="section-count" id="attnCount"></span>
+        </div>
+        <div class="sort-bar" id="attnSortBar">
+          <span>Sort:</span>
+          <button class="sort-btn active" data-sort="urgency">Urgency</button>
+          <button class="sort-btn" data-sort="due">Due date</button>
+          <button class="sort-btn" data-sort="customer">Customer</button>
+        </div>
+      </div>
+      <div id="attnTableWrap"></div>
+
+      <div class="chart-card chart-full">
+        <div class="chart-title">
+          Job throughput &mdash; completions per week
+          <span class="metric-def" title="Count of work orders reaching Complete status each week. Week 42 = current week to date.">&#x24D8;</span>
+        </div>
+        <div id="chartThroughput"></div>
+      </div>
+      <div class="chart-grid-2">
+        <div class="chart-card">
+          <div class="chart-title">Open work orders by status</div>
+          <div class="donut-wrap">
+            <div class="donut-chart" id="chartDonut"></div>
+            <div class="donut-legend" id="donutLegend"></div>
+          </div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">
+            Quality pass rate &mdash; weekly trend
+            <span class="metric-def" title="% of NCR inspection records with result = Pass each week, across all inspectors and work orders.">&#x24D8;</span>
+          </div>
+          <div id="chartQuality"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== WORK CENTER QUEUE ===== -->
+    <section class="page" data-page="queue" hidden>
+      <div class="section-head">
+        <h2>Departments</h2>
+        <div class="btn-group">
+          <button class="btn primary" id="addJobBtn">+ New work order</button>
+          <button class="btn" id="exportSchedBtn">Export CSV</button>
+        </div>
+      </div>
+      <div id="deptGrid" class="dept-grid"></div>
+      <div id="recentCompletions"></div>
+      <div id="deptBoard" hidden>
+        <div class="breadcrumb">
+          <button class="breadcrumb-back" id="deptBack">&#8592; Departments</button>
+          <span class="breadcrumb-dept" id="deptBreadcrumbName"></span>
+        </div>
+        <div class="board" id="board"></div>
+      </div>
+    </section>
+
+    <!-- ===== QUALITY ===== -->
+    <section class="page" data-page="quality" hidden>
+      <div class="section-head">
+        <h2>Inspection log</h2>
+        <div class="btn-group">
+          <button class="btn primary" id="addQualBtn">+ New inspection</button>
+          <button class="btn" id="exportQualBtn">Export CSV</button>
+        </div>
+      </div>
+      <div class="filter-search-bar">
+        <div class="filter-pills" id="qualFilterPills"></div>
+        <input class="filter-search-input" id="qualSearch" type="search" placeholder="Search NCR#, WO#, part, inspector&hellip;">
+      </div>
+      <div class="table-wrap overflow-x">
+        <table>
+          <thead>
+            <tr><th>Date</th><th>NCR</th><th>Work order</th><th>Part</th><th>Inspector</th><th>Result</th></tr>
+          </thead>
+          <tbody id="qualityBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===== INVENTORY ===== -->
+    <section class="page" data-page="inventory" hidden>
+      <div class="section-head">
+        <h2 id="invSectionTitle">Materials on hand</h2>
+        <div class="btn-group">
+          <button class="btn primary" id="addInvBtn">+ New item</button>
+          <button class="btn" id="recvInvBtn">Receive material</button>
+          <button class="btn" id="createPOBtn" hidden>+ Create PO</button>
+          <button class="btn" id="exportInvBtn">Export CSV</button>
+        </div>
+      </div>
+      <div class="inv-tabs" id="invTabs">
+        <button class="inv-tab active" data-invtab="materials">Materials</button>
+        <button class="inv-tab" data-invtab="pos">Purchase Orders</button>
+      </div>
+      <div id="materialsContent">
+        <div class="filter-search-bar">
+          <div class="filter-pills" id="invFilterPills"></div>
+          <input class="filter-search-input" id="invSearch" type="search" placeholder="Search SKU, description, supplier&hellip;">
+        </div>
+        <div class="table-wrap overflow-x">
+          <table>
+            <thead>
+              <tr><th>SKU</th><th>Description</th><th>On hand</th><th>Reorder pt.</th><th>Supplier</th><th>Status</th></tr>
+            </thead>
+            <tbody id="inventoryBody"></tbody>
+          </table>
+        </div>
+      </div>
+      <div id="poContent" hidden>
+        <div class="table-wrap overflow-x">
+          <table>
+            <thead>
+              <tr><th>PO#</th><th>Material</th><th>Supplier</th><th>Qty</th><th>Status</th><th>Order date</th><th>Expected</th><th>Notes</th></tr>
+            </thead>
+            <tbody id="poBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SETTINGS ===== -->
+    <section class="page" data-page="settings" hidden>
+      <div class="settings-grid">
+        <div class="card-section">
+          <h2 class="section-title">Company profile</h2>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Company name</label>
+              <input class="form-input" type="text" value="Meridian Works LLC">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Primary contact</label>
+              <input class="form-input" type="text" value="Greg Halden">
+            </div>
+            <div class="form-group form-group--wide">
+              <label class="form-label">Address</label>
+              <input class="form-input" type="text" value="1408 Industrial Pkwy, Lowell, MA 01852">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Time zone</label>
+              <input class="form-input" type="text" value="America/New_York (EST)">
+            </div>
+            <div class="form-group">
+              <label class="form-label">ERP instance ID</label>
+              <input class="form-input" type="text" value="MW-0042" readonly>
+            </div>
+          </div>
+        </div>
+        <div class="card-section">
+          <h2 class="section-title">Production lines &amp; departments</h2>
+          <div id="settingsLines"></div>
+        </div>
+        <div class="card-section">
+          <h2 class="section-title">Team</h2>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Name</th><th>Role</th><th>Email</th></tr></thead>
+              <tbody>
+                <tr><td>Greg Halden</td><td>Shop Manager</td><td class="cell-muted">g.halden@meridianworks.com</td></tr>
+                <tr><td>M. Reyes</td><td>Quality Inspector</td><td class="cell-muted">m.reyes@meridianworks.com</td></tr>
+                <tr><td>R. Okafor</td><td>CNC Operator</td><td class="cell-muted">r.okafor@meridianworks.com</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== WO DETAIL ===== -->
+    <section class="page" data-page="wo-detail" hidden>
+      <div class="detail-nav" id="woDetailNav"></div>
+      <div id="woDetailContent"></div>
+    </section>
+
+    <!-- ===== MATERIAL DETAIL ===== -->
+    <section class="page" data-page="material-detail" hidden>
+      <div class="detail-nav" id="matDetailNav"></div>
+      <div id="matDetailContent"></div>
+    </section>
+
+    <!-- ===== CUSTOMER DETAIL ===== -->
+    <section class="page" data-page="customer-detail" hidden>
+      <div class="detail-nav" id="custDetailNav"></div>
+      <div id="custDetailContent"></div>
+    </section>
+
+  </main>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<aside class="panel" id="panel" aria-hidden="true">
+  <div class="panel-head">
+    <div>
+      <div class="kicker" id="panelKicker">&nbsp;</div>
+      <h3 id="panelTitle">&nbsp;</h3>
+    </div>
+    <button class="panel-close" id="panelClose" aria-label="Close">&#10005;</button>
+  </div>
+  <div class="panel-body" id="panelBody"></div>
+</aside>
+
+<div class="modal-scrim" id="modalScrim">
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-head">
+      <h3 id="modalTitle">Add item</h3>
+      <button class="panel-close" id="modalClose" aria-label="Close">&#10005;</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
